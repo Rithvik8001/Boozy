@@ -1,6 +1,8 @@
 import express, { Express } from "express";
 import connectDb from "./database/db";
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app: Express = express();
 app.use(express.json());
@@ -16,8 +18,8 @@ app.use(
 
 connectDb()
   .then(() => {
-    app.listen(3000, () => {
-      console.log("Server is running on port 3000");
+    app.listen(process.env.PORT, () => {
+      console.log(`Server is running on port ${process.env.PORT}`);
     });
   })
   .catch((error) => {
