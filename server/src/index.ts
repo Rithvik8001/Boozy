@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user";
 import todoRoutes from "./routes/todos";
 import cookieParser from "cookie-parser";
+import profileRoutes from "./routes/profile";
 dotenv.config();
 
 const app: Express = express();
@@ -22,6 +23,7 @@ app.use(
 
 app.use("/", userRoutes);
 app.use("/", todoRoutes);
+app.use("/", profileRoutes);
 
 connectDb()
   .then(() => {
