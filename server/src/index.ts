@@ -2,10 +2,14 @@ import express, { Express } from "express";
 import connectDb from "./database/db";
 import cors from "cors";
 import dotenv from "dotenv";
+import userRoutes from "./routes/user";
+import todoRoutes from "./routes/todos";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app: Express = express();
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(
   cors({
@@ -15,6 +19,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+app.use("/", userRoutes);
+app.use("/", todoRoutes);
 
 connectDb()
   .then(() => {

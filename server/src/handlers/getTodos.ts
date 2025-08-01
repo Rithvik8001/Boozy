@@ -1,20 +1,25 @@
 import { Request, Response } from "express";
 import Todo from "../database/models/todos";
-import mongoose from "mongoose";
+import { IUser } from "../database/models/user";
 
 const getTodos = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  if (!id) {
-    return res.status(400).json({ message: "User ID is required" });
-  }
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: "Invalid user ID" });
-  }
+  const { user } = req as Request & { user: IUser };
   try {
-    const todos = await Todo.find({ user: id }).populate("user", "email");
-    res.status(200).json(todos);
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const todos = await Todo.find({ user: user._id }).populate("user", "email");
+    if (todos.length === 0) {
+      return res.status(404).json({ message: "No todos found" });
+    }
+    res
+      .status(200)
+      .json({ message: "Todos fetched successfully", data: todos });
   } catch (error) {
-    res.status(500).json({ message: "Failed to get todos" });
+    console.error("Error getting todos:", error);
+    res.status(500).json({
+      message: error instanceof Error ? error.message : "Failed to get todos",
+    });
   }
 };
 

@@ -20,6 +20,7 @@ const userSchema = new Schema(
       required: true,
       minlength: [3, "Name must be at least 3 characters long"],
       maxlength: [30, "Name must be less than 30 characters long"],
+      trim: true,
     },
     email: {
       type: String,
@@ -30,17 +31,18 @@ const userSchema = new Schema(
           throw new Error("Invalid email");
         }
       },
+      trim: true,
     },
     password: {
       type: String,
       required: true,
       minlength: [8, "Password must be at least 8 characters long"],
-      maxlength: [32, "Password must be less than 32 characters long"],
       validate(value: string) {
         if (!validator.isStrongPassword(value)) {
           throw new Error("Password is not strong enough");
         }
       },
+      trim: true,
     },
   },
   { timestamps: true }
