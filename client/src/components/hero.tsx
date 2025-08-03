@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import { Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+
 export default function Hero() {
   return (
     <div className="border-border m-2 overflow-hidden rounded-2xl border">
