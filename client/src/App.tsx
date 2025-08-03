@@ -2,6 +2,7 @@ import Home from "./components/home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signup from "./components/auth/signup/signup";
 import Login from "./components/auth/login/login";
+import { Toaster } from "sonner";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </>
   );
 }
